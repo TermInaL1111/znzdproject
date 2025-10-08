@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <!-- 登录/注册页面 -->
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.sb.LoginFragment"
+        android:label="登录/注册"
+        tools:layout="@layout/fragment_login">
+
+        <!-- 登录成功跳转到 ProfileFragment -->
+        <action
+            android:id="@+id/action_loginFragment_to_profileFragment"
+            app:destination="@id/profileFragment"/>
+    </fragment>
+
+    <!-- 底部导航容器 -->
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.sb.MainFragment"
+        android:label="底部导航"
+        tools:layout="@layout/fragment_main">
+
+        <!-- 可通过按钮或 Tab 内子页面跳转 -->
+        <action
+            android:id="@+id/action_mainFragment_to_dataInputFragment"
+            app:destination="@id/dataInputFragment"/>
+        <action
+            android:id="@+id/action_mainFragment_to_dataVisualFragment"
+            app:destination="@id/dataVisualFragment"/>
+        <action
+            android:id="@+id/action_mainFragment_to_mealRecordFragment"
+            app:destination="@id/mealRecordFragment"/>
+        <action
+            android:id="@+id/action_mainFragment_to_exerciseRecordFragment"
+            app:destination="@id/exerciseRecordFragment"/>
+    </fragment>
+
+    <!-- 我的模块 -->
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.myapp.ProfileFragment"
+        android:label="我的"
+        tools:layout="@layout/fragment_profile">
+
+        <!-- 示例：个人信息编辑跳转 -->
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment"/>
+    </fragment>
+
+    <!-- 健康数据管理模块 -->
+    <fragment
+        android:id="@+id/dataInputFragment"
+        android:name="com.example.myapp.DataInputFragment"
+        android:label="健康数据录入"
+        tools:layout="@layout/fragment_data_input"/>
+
+    <fragment
+        android:id="@+id/dataVisualFragment"
+        android:name="com.example.myapp.DataVisualFragment"
+        android:label="健康数据可视化"
+        tools:layout="@layout/fragment_data_visual"/>
+
+    <!-- 饮食日记模块 -->
+    <fragment
+        android:id="@+id/mealRecordFragment"
+        android:name="com.example.myapp.MealRecordFragment"
+        android:label="饮食日记"
+        tools:layout="@layout/fragment_meal_record"/>
+
+    <!-- 运动模块 -->
+    <fragment
+        android:id="@+id/exerciseRecordFragment"
+        android:name="com.example.myapp.ExerciseRecordFragment"
+        android:label="运动记录"
+        tools:layout="@layout/fragment_exercise_record"/>
+
+    <!-- 编辑个人信息 -->
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.myapp.EditProfileFragment"
+        android:label="编辑个人信息"
+        tools:layout="@layout/fragment_edit_profile"/>
+
+</navigation>
+
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<navigation xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:id="@+id/nav_graph"-->
+<!--    app:startDestination="@id/loginFragment">-->
+
+<!--    &lt;!&ndash; 登录页面 &ndash;&gt;-->
+<!--    <fragment-->
+<!--        android:id="@+id/loginFragment"-->
+<!--        android:name="com.example.sb.LoginFragment"-->
+<!--        android:label="登录"-->
+<!--        tools:layout="@layout/fragment_login">-->
+
+<!--        &lt;!&ndash; 登录成功后跳转到数据录入页面 &ndash;&gt;-->
+<!--        <action-->
+<!--            android:id="@+id/action_loginFragment_to_dataInputFragment"-->
+<!--            app:destination="@id/dataInputFragment" />-->
+<!--    </fragment>-->
+
+<!--    &lt;!&ndash; 健康数据录入页面 &ndash;&gt;-->
+<!--    <fragment-->
+<!--        android:id="@+id/dataInputFragment"-->
+<!--        android:name="com.example.sb.DataInputFragment"-->
+<!--        android:label="健康数据录入"-->
+<!--        tools:layout="@layout/fragment_data_input">-->
+
+<!--        &lt;!&ndash; 跳转到数据可视化页面 &ndash;&gt;-->
+<!--&lt;!&ndash;        <action&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/action_dataInputFragment_to_dataVisualFragment"&ndash;&gt;-->
+<!--&lt;!&ndash;            app:destination="@id/dataVisualFragment" />&ndash;&gt;-->
+<!--    </fragment>-->
+
+<!--    &lt;!&ndash; 健康数据可视化页面 &ndash;&gt;-->
+<!--&lt;!&ndash;    <fragment&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/dataVisualFragment"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:name="com.example.myapp.DataVisualFragment"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:label="健康数据可视化"&ndash;&gt;-->
+<!--&lt;!&ndash;        tools:layout="@layout/fragment_data_visual" />&ndash;&gt;-->
+
+<!--</navigation>-->
+
+<!--上面的只有简单的两个页面 -->
+
+
+
+<!--    功能	对应 Vue 概念-->
+<!--<navigation>	Vue Router 的 router 配置文件-->
+<!--<fragment>	每个 Vue 页面组件（<template>）-->
+<!--    <action>	Vue Router 的 router.push() 跳转关系-->
