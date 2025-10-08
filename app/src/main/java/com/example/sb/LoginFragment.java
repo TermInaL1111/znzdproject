@@ -1,7 +1,5 @@
 package com.example.sb;
 
-
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -13,6 +11,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.example.sb.model.GenericResponse;
+import com.example.sb.model.LoginRequest;
+import com.example.sb.model.RegisterRequest;
+import com.example.sb.network.ApiClient;
+import com.example.sb.network.ApiService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class LoginFragment extends Fragment {
 
     private EditText etUsername, etPassword, etConfirmPassword, etAge;
@@ -23,6 +31,8 @@ public class LoginFragment extends Fragment {
     private TextView tvError;
 
     private boolean isRegistering = false;
+
+    private ApiService api;
 
     @Nullable
     @Override
@@ -46,6 +56,8 @@ public class LoginFragment extends Fragment {
         btnToggle.setOnClickListener(v -> toggleMode());
         btnSubmit.setOnClickListener(v -> submit());
 
+        api = ApiClient.getApi();
+
         return view;
     }
 
@@ -55,6 +67,10 @@ public class LoginFragment extends Fragment {
         btnSubmit.setText(isRegistering ? "注册" : "登录");
         btnToggle.setText(isRegistering ? "已有账号？去登录" : "没有账号？去注册");
         tvError.setText("");
+        etPassword.setText("");
+        etConfirmPassword.setText("");
+        etAge.setText("");
+        rgGender.clearCheck();
     }
 
     private void submit() {
@@ -90,14 +106,55 @@ public class LoginFragment extends Fragment {
 
             String gender = (selectedGenderId == R.id.rbMale) ? "男" : "女";
 
-            // TODO: 调用注册接口，成功后切换回登录
-            Toast.makeText(getContext(), "注册成功，返回登录", Toast.LENGTH_SHORT).show();
-            toggleMode();
+            // Retrofit 注册请求
+            RegisterRequest req = new RegisterRequest(username, password, gender, age, username);
+            api.register(req).enqueue(new Callback<GenericResponse>() {
+                @Override
+                public void onResponse(Call<GenericResponse> call, Response<GenericResponse> response) {
+                    GenericResponse res = response.body();
+                    if(res != null && res.code == 1){
+                        Toast.makeText(getContext(), "注册成功，请登录", Toast.LENGTH_SHORT).show();
+                        toggleMode();
+                    } else {
+                        tvError.setText(res != null ? res.msg : "注册失败");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<GenericResponse> call, Throwable t) {
+                    tvError.setText("注册请求失败，请稍后重试");
+                }
+            });
 
         } else {
-            // TODO: 调用登录接口，成功后跳转到 ManagerFragment / ProfileFragment
-            Toast.makeText(getContext(), "登录成功", Toast.LENGTH_SHORT).show();
-            Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_profileFragment);
+            // Retrofit 登录请求
+            LoginRequest req = new LoginRequest(username, password);
+            api.login(req).enqueue(new Callback<GenericResponse>() {
+                @Override
+                public void onResponse(Call<GenericResponse> call, Response<GenericResponse> response) {
+                    GenericResponse res = response.body();
+                    if(res != null && res.code == 1){
+                        // 保存 token
+                        getActivity().getSharedPreferences("app", 0)
+                                .edit()
+                                .putString("token", res.data.token)
+                                .putString("account", username)
+                                .apply();
+
+                        // 跳转 ProfileFragment / MainFragment
+                        Navigation.findNavController(getView())
+                                .navigate(R.id.action_loginFragment_to_profileFragment);
+
+                    } else {
+                        tvError.setText(res != null ? res.msg : "登录失败");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<GenericResponse> call, Throwable t) {
+                    tvError.setText("登录请求失败，请稍后重试");
+                }
+            });
         }
     }
 }

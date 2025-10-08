@@ -11,6 +11,7 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
+        <!-- 页面标题 -->
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
@@ -20,7 +21,7 @@
             android:textStyle="bold"
             android:layout_marginBottom="20dp"/>
 
-        <!-- 用户名 -->
+        <!-- 用户名输入 -->
         <EditText
             android:id="@+id/etUsername"
             android:layout_width="match_parent"
@@ -29,7 +30,7 @@
             android:inputType="textPersonName"
             android:layout_marginBottom="10dp"/>
 
-        <!-- 密码 -->
+        <!-- 密码输入 -->
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
@@ -46,6 +47,7 @@
             android:orientation="vertical"
             android:visibility="gone">
 
+            <!-- 确认密码 -->
             <EditText
                 android:id="@+id/etConfirmPassword"
                 android:layout_width="match_parent"
@@ -54,16 +56,26 @@
                 android:inputType="textPassword"
                 android:layout_marginBottom="10dp"/>
 
+            <!-- 性别选择 -->
             <RadioGroup
                 android:id="@+id/rgGender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginBottom="10dp">
-                <RadioButton android:id="@+id/rbMale" android:text="男" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-                <RadioButton android:id="@+id/rbFemale" android:text="女" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                <RadioButton
+                    android:id="@+id/rbMale"
+                    android:text="男"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <RadioButton
+                    android:id="@+id/rbFemale"
+                    android:text="女"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
             </RadioGroup>
 
+            <!-- 年龄输入 -->
             <EditText
                 android:id="@+id/etAge"
                 android:layout_width="match_parent"
@@ -73,6 +85,7 @@
                 android:layout_marginBottom="10dp"/>
         </LinearLayout>
 
+        <!-- 提交按钮 -->
         <Button
             android:id="@+id/btnSubmit"
             android:layout_width="match_parent"
@@ -80,6 +93,7 @@
             android:text="登录"
             android:layout_marginBottom="10dp"/>
 
+        <!-- 切换登录/注册按钮 -->
         <Button
             android:id="@+id/btnToggle"
             android:layout_width="wrap_content"
@@ -87,13 +101,12 @@
             android:text="没有账号？去注册"
             android:background="@android:color/transparent"/>
 
+        <!-- 错误提示 -->
         <TextView
             android:id="@+id/tvError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#FF0000"
             android:layout_marginTop="10dp"/>
-
     </LinearLayout>
-
 </ScrollView>

@@ -3,6 +3,7 @@ package com.example.sb.network;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+//Retrofit 初始化
 public class ApiClient {
     private static Retrofit retrofit = null;
 
