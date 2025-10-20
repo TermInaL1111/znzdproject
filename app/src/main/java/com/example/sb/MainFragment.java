@@ -30,23 +30,24 @@ public class MainFragment extends Fragment {
         navController = navHostFragment.getNavController();
 
         // Tab 点击切换页面
-        bottomNav.setOnItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.navigation_profile:
-                    navController.navigate(R.id.profileFragment);
-                    return true;
-                case R.id.navigation_health:
-                    navController.navigate(R.id.dataInputFragment);
-                    return true;
-                case R.id.navigation_exercise:
-                    navController.navigate(R.id.exerciseRecordFragment);
-                    return true;
-                case R.id.navigation_meal:
-                    navController.navigate(R.id.mealRecordFragment);
-                    return true;
-            }
-            return false;
-        });
+        //还没实现 ...
+//        bottomNav.setOnItemSelectedListener(item -> {
+//            switch (item.getItemId()) {
+//                case R.id.navigation_profile:
+//                    navController.navigate(R.id.profileFragment);
+//                    return true;
+//                case R.id.navigation_health:
+//                    navController.navigate(R.id.dataInputFragment);
+//                    return true;
+//                case R.id.navigation_exercise:
+//                    navController.navigate(R.id.exerciseRecordFragment);
+//                    return true;
+//                case R.id.navigation_meal:
+//                    navController.navigate(R.id.mealRecordFragment);
+//                    return true;
+//            }
+//            return false;
+//        });
 
         return view;
     }

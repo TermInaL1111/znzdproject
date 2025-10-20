@@ -11,7 +11,8 @@ public class ApiClient {
     public static ApiService getApi() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl("http://10.0.2.2/api") // 替换成你的 Spring Boot 地址
+                    .baseUrl("http://10.0.2.2:8080/") // 替换成你的 Spring Boot 地址
+                    //幽默 忘记加端口了
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }

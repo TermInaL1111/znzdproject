@@ -20,9 +20,11 @@ import com.example.sb.model.User;
 import com.example.sb.network.ApiClient;
 import com.example.sb.network.ApiService;
 
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 
 public class LoginFragment extends Fragment {
 
@@ -129,16 +131,19 @@ public class LoginFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
-                    tvError.setText("注册请求失败，请稍后重试");
+                    tvError.setText("请求失败：" + t.getMessage());
+                    t.printStackTrace();
                 }
             });
         } else {
             // Retrofit 登录请求
+            tvError.setText("666");
             LoginRequest req = new LoginRequest(username, password);
             api.login(req).enqueue(new Callback<ApiResponse<LoginResponse>>() {
                 @Override
                 public void onResponse(Call<ApiResponse<LoginResponse>> call, Response<ApiResponse<LoginResponse>> response) {
                     ApiResponse<LoginResponse> res = response.body();
+                    tvError.setText("666请求失败：" + res);
                     if(res != null && res.getCode() == 1){
                         // 保存 token
                         getActivity().getSharedPreferences("app", 0)
@@ -148,8 +153,8 @@ public class LoginFragment extends Fragment {
                                 .apply();
 
                         // 跳转 ProfileFragment / MainFragment
-                        Navigation.findNavController(getView())
-                                .navigate(R.id.action_loginFragment_to_profileFragment);
+//                        Navigation.findNavController(getView())
+//                                .navigate(R.id.action_loginFragment_to_profileFragment);
 
                     } else {
                         tvError.setText(res != null ? res.msg : "登录失败");
@@ -158,9 +163,24 @@ public class LoginFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<ApiResponse<LoginResponse>> call, Throwable t) {
-                    tvError.setText("登录请求失败，请稍后重试");
+                    tvError.setText("请求失败：" + t.getMessage());
+                    t.printStackTrace();
                 }
             });
         }
     }
 }
+
+//你现在遇到的错误是 Android 9+ 默认不允许明文 HTTP 通信：
+//
+//CLEARTEXT communication to 10.0.2.2 not permitted by network security policy
+//
+//
+//也就是说，你用的 http://10.0.2.2:8080/ 是明文 HTTP，被系统阻止了。
+//解决方案 2：使用 HTTPS（更安全，生产推荐）
+//
+//给 Spring Boot 配置 SSL，使用 https://10.0.2.2:8443/。
+//
+//需要生成自签名证书，Android Emulator 信任即可。
+//
+//开发阶段通常用方案 1，生产环境必须用 HTTPS。
