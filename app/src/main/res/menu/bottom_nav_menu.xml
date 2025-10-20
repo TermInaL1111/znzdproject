@@ -1,21 +1,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_profile"
+
         android:title="我的"/>
     <item
         android:id="@+id/navigation_health"
-        android:icon="@drawable/ic_health"
+
         android:title="营养健康"/>
     <item
         android:id="@+id/navigation_exercise"
-        android:icon="@drawable/ic_exercise"
+
         android:title="运动"/>
     <item
         android:id="@+id/navigation_meal"
-        android:icon="@drawable/ic_meal"
+
         android:title="饮食日记"/>
 </menu>
-
-
+<!--    android:icon="@drawable/ic_profile"-->
+<!--    android:icon="@drawable/ic_health"-->
+<!--    android:icon="@drawable/ic_exercise"-->
+<!--    android:icon="@drawable/ic_meal"-->
 <!--底部导航菜单定义-->

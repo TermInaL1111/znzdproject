@@ -11,9 +11,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import com.example.sb.model.GenericResponse;
+import com.example.sb.model.ApiResponse;
+
 import com.example.sb.model.LoginRequest;
+import com.example.sb.model.LoginResponse;
 import com.example.sb.model.RegisterRequest;
+import com.example.sb.model.User;
 import com.example.sb.network.ApiClient;
 import com.example.sb.network.ApiService;
 
@@ -107,37 +110,40 @@ public class LoginFragment extends Fragment {
             String gender = (selectedGenderId == R.id.rbMale) ? "男" : "女";
 
             // Retrofit 注册请求
-            RegisterRequest req = new RegisterRequest(username, password, gender, age, username);
-            api.register(req).enqueue(new Callback<GenericResponse>() {
+            RegisterRequest req = new RegisterRequest(username, password, gender, age, username,null);
+            api.register(req).enqueue(new Callback<ApiResponse<Void>>() {
                 @Override
-                public void onResponse(Call<GenericResponse> call, Response<GenericResponse> response) {
-                    GenericResponse res = response.body();
-                    if(res != null && res.code == 1){
-                        Toast.makeText(getContext(), "注册成功，请登录", Toast.LENGTH_SHORT).show();
-                        toggleMode();
+                public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        ApiResponse<Void> res = response.body();
+                        if (res.getCode() == 1) {
+                            Toast.makeText(getContext(), "注册成功，请登录", Toast.LENGTH_SHORT).show();
+                            toggleMode();
+                        } else {
+                            tvError.setText(res.getMsg());
+                        }
                     } else {
-                        tvError.setText(res != null ? res.msg : "注册失败");
+                        tvError.setText("注册失败，服务器返回错误");
                     }
                 }
 
                 @Override
-                public void onFailure(Call<GenericResponse> call, Throwable t) {
+                public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
                     tvError.setText("注册请求失败，请稍后重试");
                 }
             });
-
         } else {
             // Retrofit 登录请求
             LoginRequest req = new LoginRequest(username, password);
-            api.login(req).enqueue(new Callback<GenericResponse>() {
+            api.login(req).enqueue(new Callback<ApiResponse<LoginResponse>>() {
                 @Override
-                public void onResponse(Call<GenericResponse> call, Response<GenericResponse> response) {
-                    GenericResponse res = response.body();
-                    if(res != null && res.code == 1){
+                public void onResponse(Call<ApiResponse<LoginResponse>> call, Response<ApiResponse<LoginResponse>> response) {
+                    ApiResponse<LoginResponse> res = response.body();
+                    if(res != null && res.getCode() == 1){
                         // 保存 token
                         getActivity().getSharedPreferences("app", 0)
                                 .edit()
-                                .putString("token", res.data.token)
+                                .putString("token", res.getData().getToken())
                                 .putString("account", username)
                                 .apply();
 
@@ -151,7 +157,7 @@ public class LoginFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<GenericResponse> call, Throwable t) {
+                public void onFailure(Call<ApiResponse<LoginResponse>> call, Throwable t) {
                     tvError.setText("登录请求失败，请稍后重试");
                 }
             });

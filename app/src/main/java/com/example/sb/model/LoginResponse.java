@@ -4,12 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// 登录请求
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class LoginRequest {
-    public String account;
-    public String pw;
 
+//登陆
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class LoginResponse {
+    private String account;
+    private String fid;
+    private String token;
 }

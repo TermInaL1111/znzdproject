@@ -14,7 +14,9 @@ import android.content.Intent;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
+import com.example.sb.model.ApiResponse;
 import com.example.sb.model.GenericResponse;
+import com.example.sb.model.UpdateUserRequest;
 import com.example.sb.network.ApiClient;
 import com.example.sb.network.ApiService;
 
@@ -65,11 +67,11 @@ public class ProfileFragment extends Fragment {
                 .getString("currentaccount", null);
         if (account == null) return;
 
-        apiService.getUser(account).enqueue(new Callback<UserResponse>() {
+        apiService.getUser(account).enqueue(new Callback<ApiResponse<Void>>() {
             @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
                 if (response.isSuccessful() && response.body().code == 1) {
-                    UserResponse.Data data = response.body().data;
+                    UserResponse data = response.body().data;
                     etAccount.setText(data.account);
                     etAge.setText(String.valueOf(data.age));
                     if ("男".equals(data.sex)) rbMale.setChecked(true);
@@ -80,7 +82,7 @@ public class ProfileFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
                 Toast.makeText(getContext(), "获取用户信息失败", Toast.LENGTH_SHORT).show();
             }
         });
@@ -118,9 +120,9 @@ public class ProfileFragment extends Fragment {
 
         UpdateUserRequest req = new UpdateUserRequest(account, sex, age, TextUtils.isEmpty(newPw)? null : newPw);
 
-        apiService.updateUser(req).enqueue(new Callback<GenericResponse>() {
+        apiService.updateUser(req).enqueue(new Callback<ApiResponse<Void>>() {
             @Override
-            public void onResponse(Call<GenericResponse> call, Response<GenericResponse> response) {
+            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
                 if (response.isSuccessful() && response.body().code == 1) {
                     Toast.makeText(getContext(), "修改成功", Toast.LENGTH_SHORT).show();
                     etNewPw.setText("");
@@ -131,7 +133,7 @@ public class ProfileFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<GenericResponse> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
                 Toast.makeText(getContext(), "请求失败", Toast.LENGTH_SHORT).show();
             }
         });

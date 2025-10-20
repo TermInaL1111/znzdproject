@@ -21,14 +21,14 @@
             android:layout_marginBottom="20dp"/>
 
         <!-- 头像 -->
-        <ImageView
-            android:id="@+id/ivAvatar"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:scaleType="centerCrop"
-            android:layout_marginBottom="10dp"
-            android:src="@drawable/ic_launcher_background"
-            android:background="@drawable/avatar_border"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/ivAvatar"-->
+<!--            android:layout_width="80dp"-->
+<!--            android:layout_height="80dp"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            android:src="@drawable/ic_launcher_background"-->
+<!--          android:background="@drawable/avatar_border"/>-->
 
         <Button
             android:id="@+id/btnChangeAvatar"
