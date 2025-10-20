@@ -1,6 +1,7 @@
 package com.example.sb.network;
 
-import com.example.sb.model.GenericResponse;
+
+import com.example.sb.model.ApiResponse;
 import com.example.sb.model.LoginRequest;
 import com.example.sb.model.RegisterRequest;
 
@@ -17,7 +18,7 @@ import retrofit2.http.Query;
 //Retrofit 接口
 public interface ApiService {
     @POST("login")
-    Call<GenericResponse> login(@Body LoginRequest request);
+    Call<ApiResponse<>> login(@Body LoginRequest request);
 
     @POST("register")
     Call<GenericResponse> register(@Body RegisterRequest request);
